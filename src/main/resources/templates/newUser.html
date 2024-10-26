@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+    <title>Add new user</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/users/}" th:object="${user}">
+
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br>
+    <label for="name1">Enter surname: </label>
+    <input type="text" th:field="*{surname}" id="name1">
+    <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+    <br>
+    <label for="name2">Enter age: </label>
+    <input type="text" th:field="*{age}" id="name2">
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+    <br>
+    <label for="name3">Enter email: </label>
+    <input type="text" th:field="*{email}" id="name3">
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <br>
+    <input type="submit" value="Add user">
+
+</form>
+<br>
+<br>
+<a href="/users/">go to start page</a>
+</body>
+</html>
