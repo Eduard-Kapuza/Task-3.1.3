@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<p th:utext="'ID: ' +${person.getId()}
+               +'<br/>'+'       User Name(login): ' +${person.getUsername()}
+               +'<br/>'+'       Year of birth: ' +${person.getYearOfBirth()}
+               +'<br/>'+'       Password: ' +${person.getPassword()}
+               +'<br/>'+'       Roles: ' +${person.getRoles()}
+               +'<br/>'"/>
+<br>
+<form th:method="GET" th:action="@{/persons/{id}(id=${person.getId()})}" th:object="${person}">
+    <input type="submit" value="Edit this user">
+</form>
+<br>
+
+<form th:method="GET" th:action="@{/persons/logout}">
+    <input type="submit" value="logout">
+</form>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251"/>
+    <title>Edit user</title>
+</head>
+<body>
+<h1>Edit user</h1>
+
+<form th:action="@{/persons/}" th:object="${person}" th:method="PUT">
+
+    <input type="hidden" id="id" th:field="*{id}" required th:value="${person.getId()}">
+
+    <div>
+        <label for="username">Username: </label>
+        <input type="text" id="username" th:field="*{username}" required>
+        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    </div>
+    <br>
+    <div>
+        <label for="password">Password: </label>
+        <input type="text" id="password" th:field="*{password}" required>
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+    <br>
+    <label for="name1">YearOfBirth: </label>
+    <input type="number" th:field="*{yearOfBirth}" id="name1">
+    <div style="color: red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}"></div>
+    <br>
+
+    <div th:type="hidden">
+        <label for="r">Roles</label>
+        <select th:field="*{roles}" id="r" multiple>
+            <option th:each="role : ${listRoles}"
+                    th:value="${role.id}"
+                    th:text="${role.roleName}"></option>
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+</body>
+</html>
