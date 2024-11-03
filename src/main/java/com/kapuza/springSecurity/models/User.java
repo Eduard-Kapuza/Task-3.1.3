@@ -18,55 +18,56 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
-@Table(name = "person3_1_2")
-public class Person {
+@Table(name = "user3_1_3")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotEmpty(message = "Имя не должно быть пустым")
     @Size(min = 2, max = 100, message = "Имя должно быть быть от 2 до 100 символов")
     @Column(name = "username")
     private String username;
 
-    @Min(value = 0, message = "Год рождения должен быть больше, чем 0")
+    @Min(value = 1900, message = "Год рождения должен быть больше, чем 1900")
     @Column(name = "year_of_birth")
-    private int yearOfBirth;
+    private Integer yearOfBirth;
 
+    @Size(min = 2, max = 100, message = "Пароль должно быть от 2 до 100 символов")
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinTable(name = "person3_1_2_role3_1_2",
-            joinColumns = @JoinColumn(name = "person3_1_2_id"),
-            inverseJoinColumns = @JoinColumn(name = "role3_1_2_id"))
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user3_1_3_role3_1_3",
+            joinColumns = @JoinColumn(name = "user3_1_3_id"),
+            inverseJoinColumns = @JoinColumn(name = "role3_1_3_id"))
     private List<Role> roles = new ArrayList<>();
 
 
-    public Person() {
+    public User() {
     }
 
-    public Person(String username, int yearOfBirth) {
+    public User(String username, Integer yearOfBirth) {
         this.username = username;
         this.yearOfBirth = yearOfBirth;
     }
 
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void addRole(Role role) {
+        roles.add(role);
     }
 
-    public void setRoles() {
-
+    public void addRole(List<Role> roles1) {
+        this.roles.addAll(roles1);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,11 +79,11 @@ public class Person {
         this.username = username;
     }
 
-    public int getYearOfBirth() {
+    public Integer getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(int yearOfBirth) {
+    public void setYearOfBirth(Integer yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
@@ -94,36 +95,22 @@ public class Person {
         this.password = password;
     }
 
-    public void addRole(Role role) {
-        roles.add(role);
-    }
-
-    public void addRole(List<Role> roles1) {
-        this.roles.addAll(roles1);
-    }
-
     public List<Role> getRoles() {
-        return this.roles;
+        return roles;
     }
 
-    public Role[] getRolesString() {
-
-        Role[] roles1 = new Role[roles.size()];
-        for (int i = 0; i < roles1.length; i++) {
-            roles1[i] = roles.get(i);
-        }
-
-        return roles1;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", yearOfBirth=" + yearOfBirth +
-                ", password='" + password + '\'' + "\n" +
+                ", password='" + password + '\'' +
                 ", roles=" + roles +
-                "}\n";
+                '}';
     }
 }

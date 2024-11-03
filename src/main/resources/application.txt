@@ -1,0 +1,51 @@
+#
+#
+#
+#server:
+#  port: 7070
+#
+#spring:
+#  application:
+#    name: springSecurityApp
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: postgres
+#  jpa:
+#    properties.hibernate:
+#       dialect: org.hibernate.dialect.PostgreSQLDialect
+#       show_sql: true
+#       format_sql: true
+#       ddl-auto: create-drop
+#       open-in-view: false
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 60833128500-si5bibr2f9dr3kg7a1aamrtmaddjugqr.apps.googleusercontent.com
+#            client-secret: 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
+#            redirect-uri: http://localhost:7070/login/oauth2/code/google
+#            scope: openId, email, profile
+#
+#
+#
+#
+#
+#
+#  # _method,  HTTP method PUT, PATCH, DELETE
+##spring.mvc.hiddenmethod.filter.enabled=true
+#
+#
+#logging:
+#  level:
+#    root: debug
+#    org:
+#      springframework:
+#        web: debug
+#      hibernate: info
+#
+#
+#
+#
