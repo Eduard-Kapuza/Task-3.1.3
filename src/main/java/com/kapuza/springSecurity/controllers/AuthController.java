@@ -1,59 +1,29 @@
 package com.kapuza.springSecurity.controllers;
 
-import com.kapuza.springSecurity.models.Person;
-import com.kapuza.springSecurity.services.personService.PersonDetailService;
-import com.kapuza.springSecurity.services.registrationService.RegistrationService;
-import com.kapuza.springSecurity.util.PersonValidator;
-import jakarta.validation.Valid;
+import com.kapuza.springSecurity.models.User;
+import com.kapuza.springSecurity.services.userService.UserDetailsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@Slf4j
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final PersonValidator personValidator;
-    private final RegistrationService registrationService;
-    private final PersonDetailService personDetailService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
-    public AuthController(PersonValidator personValidator, RegistrationService registrationService, PersonDetailService personDetailService) {
-        this.personValidator = personValidator;
-        this.registrationService = registrationService;
-
-        this.personDetailService = personDetailService;
+    public AuthController(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
-    /**
-     * Переход на страницу аутентификации
-     */
     @GetMapping("/login")
-    public String loginPage(@ModelAttribute("person") Person person) {
-        return "auth/login";
-    }
-
-    @PostMapping("/login")
-    public String loginPageData(@ModelAttribute("person") Person person) {
-        personDetailService.loadUserByUsername(person.getUsername());
-        return "/admin/persons";
-    }
-
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("person") Person person) {
-        return "/auth/registration";
-    }
-
-    @PostMapping("/registration")
-    public String formRegistrationPage(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "/auth/registration";
-        }
-        registrationService.register(person);
-        return "/auth/login";
+    public UserDetails loginPageData(@RequestBody User user) {
+        log.info("\u001B[33m Что пришло с формы логина: " + user + "\u001B[0m");
+        return userDetailsServiceImpl.loadUserByUsername(user.getUsername());
     }
 }

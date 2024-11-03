@@ -20,9 +20,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"));
 
         if (isAdmin) {
-            setDefaultTargetUrl("/admin/persons");
+            setDefaultTargetUrl("/api/v1//admin/users");
         } else if (isUser) {
-            setDefaultTargetUrl("/persons/");
+            setDefaultTargetUrl("/api/v1//users/");
         } else {
             setDefaultTargetUrl("/");
         }
